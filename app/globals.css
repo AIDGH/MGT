@@ -9,7 +9,7 @@ button,a,input{-webkit-tap-highlight-color:transparent}
 a:focus-visible,button:focus-visible,input:focus-visible,.slider:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
 ::selection{background:var(--gold);color:var(--deep)}
 .site-content{position:relative;padding-inline-end:var(--side-rail);background:var(--paper)}
-.scroll-rail{position:absolute;top:0;inset-inline-end:0;width:var(--side-rail);height:100vh;height:100svh;max-height:100%;pointer-events:none;background:var(--navy);will-change:transform}
+.scroll-rail{position:absolute;inset-block:0;inset-inline-end:0;width:var(--side-rail);pointer-events:none;background:var(--navy)}
 .shell{width:calc(100% - 112px);max-width:1256px;margin-inline:auto}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .skip-link{position:fixed;top:8px;inset-inline-start:12px;transform:translateY(-150%);z-index:99;background:white;padding:12px}.skip-link:focus{transform:translateY(0)}

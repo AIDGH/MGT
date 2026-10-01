@@ -62,7 +62,6 @@ export default function Home() {
   const [copiedValue, setCopiedValue] = useState('');
   const searchRef = useRef(null);
   const touchStart = useRef(null);
-  const railRef = useRef(null);
   const [copyNotice, setCopyNotice] = useState('');
   const t = content[language];
   const isEnglish = language === 'en';
@@ -70,49 +69,6 @@ export default function Home() {
   useEffect(() => { const saved = window.localStorage.getItem('mgt-language'); if (saved === 'en' || saved === 'fa') setLanguage(saved); }, []);
   useEffect(() => { document.documentElement.lang = t.locale; document.documentElement.dir = t.dir; document.title = t.title; window.localStorage.setItem('mgt-language', language); }, [language, t]);
   useEffect(() => { if (paused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined; const timer = window.setInterval(() => setActiveSlide((slide) => (slide + 1) % t.slides.length), 5200); return () => window.clearInterval(timer); }, [language, paused, t.slides.length]);
-
-  useEffect(() => {
-    const rail = railRef.current;
-    const container = rail.parentElement;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let frame = 0;
-    let position = 0;
-    let previousTime = 0;
-    let limit = 0;
-    let containerTop = 0;
-    const animate = (time) => {
-      const target = Math.max(0, Math.min(window.scrollY - containerTop, limit));
-      const elapsed = previousTime ? Math.min(time - previousTime, 64) : 16;
-      previousTime = time;
-      // Follow the viewport with a short, frame-rate-independent easing delay.
-      position += (target - position) * (reducedMotion.matches ? 1 : 1 - Math.exp(-elapsed / 120));
-      if (Math.abs(target - position) < 0.1) position = target;
-      position = Math.max(0, Math.min(position, limit));
-      rail.style.transform = `translate3d(0, ${position}px, 0)`;
-      frame = position === target ? 0 : window.requestAnimationFrame(animate);
-      if (!frame) previousTime = 0;
-    };
-    const schedule = () => { if (!frame) frame = window.requestAnimationFrame(animate); };
-    const measure = () => {
-      containerTop = container.getBoundingClientRect().top + window.scrollY;
-      limit = Math.max(0, container.offsetHeight - rail.offsetHeight);
-      schedule();
-    };
-    const observer = new ResizeObserver(measure);
-    observer.observe(container);
-    observer.observe(rail);
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', measure);
-    reducedMotion.addEventListener('change', schedule);
-    measure();
-    return () => {
-      window.cancelAnimationFrame(frame);
-      observer.disconnect();
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', measure);
-      reducedMotion.removeEventListener('change', schedule);
-    };
-  }, []);
 
   const changeLanguage = () => { setLanguage(isEnglish ? 'fa' : 'en'); setSearchMessage(''); setActiveSlide(0); if (searchRef.current) searchRef.current.value = ''; };
   const searchProducts = (event) => {
@@ -144,7 +100,7 @@ export default function Home() {
   return <div className="site-frame">
     <a className="skip-link" href="#main">{t.skip}</a>
     <div className="site-content">
-    <div ref={railRef} className="scroll-rail" aria-hidden="true"/>
+    <div className="scroll-rail" aria-hidden="true"/>
     <header id="home" className="header">
       <div className="shell header-top">
         <a className="brand" href="#home" aria-label={t.brandLabel}><BrandLogo isEnglish={isEnglish}/></a>
