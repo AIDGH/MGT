@@ -15,13 +15,13 @@ const content = {
       { title: 'قطعات الکتریکی', caption: 'تأمین مجموعه‌های برقی و الکترونیکی خودرو', keys: 'برق الکتریکی باتری چراغ electrical parts' },
     ],
     previousSlide: 'اسلاید قبلی', nextSlide: 'اسلاید بعدی', goToSlide: 'رفتن به اسلاید',
-    aboutLabel: 'درباره ما', aboutTitle: <>تجارت،<br/>با نگاهی فراتر.</>,
+    aboutLabel: 'درباره ما', aboutTitle: <>تجارت،<br/>{" "}با نگاهی فراتر.</>,
     belief: 'در جهان تجارت مجد، ما فراتر از تجارت، به ساختن روابطی پایدار و ارزش‌آفرین باور داریم.',
     directorLabel: 'پیام مدیرعامل', directorMessage: 'به عنوان مدیر عامل، هر روز با اشتیاق و تعهد در کنار تیم‌مان تلاش می‌کنیم تا نه‌تنها نیازهای تجاری شما را برآورده کنیم، بلکه با هم مسیر موفقیت و پیشرفت را بسازیم.',
     contactLabel: 'تماس با ما', contactTitle: 'ارتباط با شرکت', contactText: 'برای گفتگو درباره همکاری یا دریافت اطلاعات بیشتر، از راه‌های زیر با ما در تماس باشید.',
     addressLabel: 'آدرس', address: 'تهران، بلوار دریا، ابتدای پاکنژاد، کوچه عیسی‌پور، پلاک ۲۸، واحد ۱',
-    officePhone: 'تلفن شرکت', managementPhone: 'تلفن مدیریت', companyEmail: 'ایمیل شرکت', directorEmail: 'ایمیل مدیریت', call: 'تماس', copy: 'کپی', copied: 'کپی شد',
-    footerCompany: 'جهان تجارت مجد', footerNavLabel: 'دسترسی‌های پایین صفحه', copyright: 'تمامی حقوق برای جهان تجارت مجد محفوظ است.', backTop: 'بازگشت به بالا',
+    officePhone: 'تلفن شرکت', managementPhone: 'تلفن مدیریت', companyEmail: 'ایمیل شرکت', directorEmail: 'ایمیل مدیریت', call: 'تماس', copy: 'کپی', copied: 'کپی شد', copyFailed: 'کپی انجام نشد', companyGroup: 'ارتباط با شرکت', managementGroup: 'ارتباط با مدیریت',
+    footerCompany: 'جهان تجارت مجد', footerNavLabel: 'دسترسی‌های پایین صفحه', backTop: 'بازگشت به بالا',
   },
   en: {
     dir: 'ltr', locale: 'en', switchLabel: 'Fa', title: 'Majd Global Trading | Automotive Parts Importer',
@@ -35,13 +35,13 @@ const content = {
       { title: 'Electrical Parts', caption: 'Automotive electrical and electronic components', keys: 'electrical battery light قطعات برقی الکتریکی' },
     ],
     previousSlide: 'Previous slide', nextSlide: 'Next slide', goToSlide: 'Go to slide',
-    aboutLabel: 'About us', aboutTitle: <>Trade,<br/>with a broader vision.</>,
+    aboutLabel: 'About us', aboutTitle: <>Trade,<br/>{" "}with a broader vision.</>,
     belief: 'At Jahan Tejarat Majd, we believe in building enduring and value-creating relationships, beyond just trade.',
     directorLabel: "Managing Director's message", directorMessage: 'As the Managing Director, every day, with passion and commitment, we strive alongside our team not only to meet your business needs but to jointly shape a path of success and progress.',
     contactLabel: 'Contact us', contactTitle: 'Contact the company', contactText: 'To discuss a partnership or request more information, please contact us using the details below.',
     addressLabel: 'Address', address: 'Tehran, Iran',
-    officePhone: 'Office phone', managementPhone: 'Management', companyEmail: 'Company email', directorEmail: 'Management email', call: 'Call', copy: 'Copy', copied: 'Copied',
-    footerCompany: 'MAJD GLOBAL TRADING', footerNavLabel: 'Footer navigation', copyright: 'All rights reserved by Majd Global Trading.', backTop: 'Back to top',
+    officePhone: 'Office phone', managementPhone: 'Management', companyEmail: 'Company email', directorEmail: 'Management email', call: 'Call', copy: 'Copy', copied: 'Copied', copyFailed: 'Could not copy', companyGroup: 'Company enquiries', managementGroup: 'Management enquiries',
+    footerCompany: 'MAJD GLOBAL TRADING', footerNavLabel: 'Footer navigation', backTop: 'Back to top',
   },
 };
 
@@ -61,6 +61,8 @@ export default function Home() {
   const [searchMessage, setSearchMessage] = useState('');
   const [copiedValue, setCopiedValue] = useState('');
   const searchRef = useRef(null);
+  const touchStart = useRef(null);
+  const [copyNotice, setCopyNotice] = useState('');
   const t = content[language];
   const isEnglish = language === 'en';
 
@@ -77,8 +79,16 @@ export default function Home() {
     if (match < 0) { setSearchMessage(t.searchMiss); return; }
     setActiveSlide(match); setPaused(true); setSearchMessage(''); document.querySelector('#products')?.scrollIntoView({ behavior: 'smooth' });
   };
-  const copy = async (value) => { try { await navigator.clipboard.writeText(value); setCopiedValue(value); window.setTimeout(() => setCopiedValue(''), 1800); } catch { setCopiedValue(''); } };
-  const slideStep = (amount) => setActiveSlide((activeSlide + amount + t.slides.length) % t.slides.length);
+  const copy = async (value) => { try { await navigator.clipboard.writeText(value); setCopiedValue(value); setCopyNotice(t.copied); window.setTimeout(() => { setCopiedValue(''); setCopyNotice(''); }, 2000); } catch { setCopyNotice(t.copyFailed); } };
+  const selectSlide = (index) => { setActiveSlide(index); setPaused(true); };
+  const slideStep = (amount) => { setActiveSlide((slide) => (slide + amount + t.slides.length) % t.slides.length); setPaused(true); };
+  const swipeEnd = (event) => {
+    if (!touchStart.current) return;
+    const dx = event.changedTouches[0].clientX - touchStart.current.x;
+    const dy = event.changedTouches[0].clientY - touchStart.current.y;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) slideStep((dx < 0 ? 1 : -1) * (isEnglish ? 1 : -1));
+    touchStart.current = null;
+  };
   const contacts = [
     { label: t.addressLabel, value: t.address, copyValue: t.address, wide: true },
     { label: t.officePhone, value: '+98-21 88563648', href: 'tel:+982188563648', copyValue: '+982188563648' },
@@ -90,6 +100,7 @@ export default function Home() {
   return <div className="site-frame">
     <a className="skip-link" href="#main">{t.skip}</a>
     <div className="site-content">
+    <div className="scroll-rail" aria-hidden="true"><span className="rail-marker"/></div>
     <header id="home" className="header">
       <div className="shell header-top">
         <a className="brand" href="#home" aria-label={t.brandLabel}><BrandLogo isEnglish={isEnglish}/></a>
@@ -98,24 +109,41 @@ export default function Home() {
           <button className="language-switch" type="button" lang={isEnglish ? 'fa' : 'en'} dir="ltr" aria-label={isEnglish ? 'تغییر زبان سایت به فارسی' : 'Change site language to English'} onClick={changeLanguage}><span>{t.switchLabel}</span><GlobeIcon/></button>
         </div>
       </div>
-      <nav className="main-nav" aria-label={isEnglish ? 'Main navigation' : 'منوی اصلی'}><div className="shell nav-inner"><a href="#home">{t.nav[0]}</a><a href="#products">{t.nav[1]}</a><a href="#about">{t.nav[2]}</a><a href="#contact">{t.nav[3]}</a></div></nav>
     </header>
+      <nav className="main-nav" aria-label={isEnglish ? 'Main navigation' : 'منوی اصلی'}><div className="shell nav-inner"><a href="#home">{t.nav[0]}</a><a href="#products">{t.nav[1]}</a><a href="#about">{t.nav[2]}</a><a href="#contact">{t.nav[3]}</a></div></nav>
     <main id="main">
+      <h1 className="sr-only">{t.footerCompany}</h1>
       {/* Previous opening hero retained for possible restoration:
           «جهان تجارت مجد — از مرزها فراتر، به همکاری نزدیک‌تر.
           واردات قطعات خودرو از چین؛ پیوندی میان تأمین و تجارت.» */}
-      <section id="products" className="slider" aria-roledescription="carousel" aria-label={t.nav[1]}>
+      <section id="products" className="slider" aria-roledescription="carousel" aria-label={t.nav[1]} tabIndex={0} onTouchStart={(event) => { touchStart.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }} onTouchEnd={swipeEnd} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); slideStep(event.key === "ArrowRight" ? 1 : -1); } }}>
         <div className="slides-track">
-          {t.slides.map((slide, index) => <article className={`slide${index === activeSlide ? ' is-active' : ''}`} key={slide.title} aria-hidden={activeSlide !== index}><img src="/images/auto-parts-showcase.jpg" alt=""/><div className="slide-shade"/><div className="shell slide-content" dir={t.dir}><span>{String(index + 1).padStart(2, '0')}</span><h1>{slide.title}</h1><p>{slide.caption}</p></div></article>)}
+          {t.slides.map((slide, index) => <article className={`slide${index === activeSlide ? ' is-active' : ''}`} key={slide.title} aria-hidden={activeSlide !== index}><img src="/images/auto-parts-showcase.jpg" alt=""/><div className="slide-shade"/><div className="shell slide-content" dir={t.dir}><span>{String(index + 1).padStart(2, '0')}</span><h2>{slide.title}</h2><p>{slide.caption}</p></div></article>)}
         </div>
         <button className="slider-arrow slider-prev" type="button" onClick={() => slideStep(-1)} aria-label={t.previousSlide}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button><button className="slider-arrow slider-next" type="button" onClick={() => slideStep(1)} aria-label={t.nextSlide}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
         <button className="slider-pause" type="button" onClick={() => setPaused(!paused)} aria-label={isEnglish ? (paused ? "Play slideshow" : "Pause slideshow") : (paused ? "پخش اسلایدر" : "توقف اسلایدر")}>{paused ? "▶" : "Ⅱ"}</button>
-        <div className="slider-dots">{t.slides.map((slide, index) => <button key={slide.title} className={index === activeSlide ? 'active' : ''} type="button" onClick={() => setActiveSlide(index)} aria-label={`${t.goToSlide} ${index + 1}`} aria-current={index === activeSlide ? 'true' : undefined}/>)}</div>
+        <span className="slide-counter" dir="ltr" aria-hidden="true">{String(activeSlide + 1).padStart(2, '0')} <span>/ 04</span></span>
+        <div className="slider-dots">{t.slides.map((slide, index) => <button key={slide.title} className={index === activeSlide ? 'active' : ''} type="button" onClick={() => selectSlide(index)} aria-label={`${t.goToSlide} ${index + 1}`} aria-current={index === activeSlide ? 'true' : undefined}/>)}</div>
       </section>
-      <section id="about" className="about section-pad"><div className="shell about-grid"><div className="section-title"><span className="section-kicker"><span>01</span> {t.aboutLabel}</span><h2>{t.aboutTitle}</h2></div><div className="about-copy"><p className="lead">{t.belief}</p><div className="director-message"><span className="director-label">{t.directorLabel}</span><p>“{t.directorMessage}”</p></div></div></div></section>
-      <section id="contact" className="contact section-pad"><div className="shell"><div className="contact-heading"><div><span className="section-kicker"><span>02</span> {t.contactLabel}</span><h2>{t.contactTitle}</h2></div><p>{t.contactText}</p></div><div className="contact-grid">{contacts.map((item) => <article className={`contact-card${item.wide ? ' wide' : ''}`} key={item.label}><span className="contact-card-label">{item.label}</span>{item.href ? <a className="contact-value" href={item.href} dir="ltr">{item.value}</a> : <p className="contact-value">{item.value}</p>}<div className="contact-actions">{item.href?.startsWith('tel:') && <a href={item.href}>{t.call}</a>}<button type="button" onClick={() => copy(item.copyValue)}><CopyIcon/>{copiedValue === item.copyValue ? t.copied : t.copy}</button></div></article>)}</div></div></section>
+      <div className="category-strip" aria-label={t.nav[1]}>{t.slides.map((slide, index) => <button type="button" key={slide.title} className={activeSlide === index ? "selected" : ""} aria-pressed={activeSlide === index} onClick={() => selectSlide(index)}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{slide.title}<span className="category-arrow" aria-hidden="true">{isEnglish ? "↗" : "↖"}</span></button>)}</div>
+      <section id="about" className="about section-pad"><div className="shell about-grid"><div className="section-title"><span className="section-kicker"><span>01</span> {t.aboutLabel}</span><h2>{t.aboutTitle}</h2></div><div className="about-copy"><p className="lead">{t.belief}</p><div className="director-message"><span className="director-label">{t.directorLabel}</span><blockquote>{t.directorMessage}</blockquote></div></div></div></section>
+      <section id="contact" className="contact section-pad">
+        <div className="shell">
+          <div className="contact-heading"><div><span className="section-kicker"><span>02</span> {t.contactLabel}</span><h2>{t.contactTitle}</h2></div><p>{t.contactText}</p></div>
+          <div className="contact-groups">{[[contacts[0], contacts[1], contacts[3]], [contacts[2], contacts[4]]].map((group, index) => <div className="contact-group" key={index}>
+            <h3><span className="contact-dot"/>{index === 0 ? t.companyGroup : t.managementGroup}</h3>
+            {group.map((item) => <div className={`contact-row${item.wide ? ' address-row' : ''}`} key={item.label}>
+              <span className="contact-card-label">{item.label}</span>
+              <div className="contact-details">{item.href ? <a className="contact-value" href={item.href} dir="ltr">{item.value}</a> : <p className="contact-value">{item.value}</p>}
+                <button className="copy-button" type="button" onClick={() => copy(item.copyValue)} aria-label={`${t.copy} ${item.label}`} title={t.copy}>{copiedValue === item.copyValue ? <span aria-hidden="true">✓</span> : <CopyIcon/>}</button>
+              </div>
+            </div>)}
+          </div>)}</div>
+          <span className="copy-notice" role="status">{copyNotice}</span>
+        </div>
+      </section>
     </main>
     </div>
-    <footer className="footer"><div className="shell"><div className="footer-main"><a href="#home" aria-label={t.brandLabel}><BrandLogo isEnglish={isEnglish} footer/></a><p>{t.footerCompany}</p><nav aria-label={t.footerNavLabel}><a href="#products">{t.nav[1]}</a><a href="#about">{t.nav[2]}</a><a href="#contact">{t.nav[3]}</a></nav></div><div className="footer-bottom"><span>{t.copyright}</span><span lang="en" dir="ltr">MAJD GLOBAL TRADING</span><a href="#home">{t.backTop} <span aria-hidden="true">↑</span></a></div></div></footer>
+    <footer className="footer"><div className="shell"><div className="footer-main"><a href="#home" aria-label={t.brandLabel}><BrandLogo isEnglish={isEnglish} footer/></a><p>{t.footerCompany}</p><nav aria-label={t.footerNavLabel}><a href="#products">{t.nav[1]}</a><a href="#about">{t.nav[2]}</a><a href="#contact">{t.nav[3]}</a></nav></div><div className="footer-bottom"><a className="footer-email" href="mailto:info@majdglobaltrading.com" dir="ltr">info@majdglobaltrading.com</a><a href="#home">{t.backTop} <span aria-hidden="true">↑</span></a></div></div></footer>
   </div>;
 }
