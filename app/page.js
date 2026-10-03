@@ -144,6 +144,6 @@ export default function Home() {
       </section>
     </main>
     </div>
-    <footer className="footer"><div className="shell"><div className="footer-main"><a href="#home" aria-label={t.brandLabel}><BrandLogo isEnglish={isEnglish} footer/></a><p>{t.footerCompany}</p><nav aria-label={t.footerNavLabel}><a href="#products">{t.nav[1]}</a><a href="#about">{t.nav[2]}</a><a href="#contact">{t.nav[3]}</a></nav></div><div className="footer-bottom"><a className="footer-email" href="mailto:info@majdglobaltrading.com" dir="ltr">info@majdglobaltrading.com</a><a href="#home">{t.backTop} <span aria-hidden="true">↑</span></a></div></div></footer>
+    <footer className="footer"><div className="shell"><div className="footer-main"><a href="#home" aria-label={t.brandLabel}><BrandLogo isEnglish={isEnglish} footer/></a><nav aria-label={t.footerNavLabel}><a href="#products">{t.nav[1]}</a><a href="#about">{t.nav[2]}</a><a href="#contact">{t.nav[3]}</a></nav></div><div className="footer-bottom"><a className="footer-email" href="mailto:info@majdglobaltrading.com" dir="ltr">info@majdglobaltrading.com</a><a href="#home">{t.backTop} <span aria-hidden="true">↑</span></a></div></div></footer>
   </div>;
 }
