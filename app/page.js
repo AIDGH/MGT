@@ -48,7 +48,7 @@ const content = {
 function SearchIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4 4"/></svg>; }
 function GlobeIcon() { return <svg className="globe-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17M3.5 15h17M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21M12 3C9.8 5.4 8.7 8.4 8.7 12s1.1 6.6 3.3 9"/></svg>; }
 function BrandLogo({ isEnglish, footer = false }) {
-  if (isEnglish) return <span className="english-logo" aria-label="MGT Global Trading"><img src="/brand/symbol-gold.png" alt=""/><span><strong>MGT</strong><small>GLOBAL TRADING</small></span></span>;
+  if (isEnglish) return <img className="english-logo" src="/brand/logo-en-final-beige.svg" width={158} height={82} alt="Majd Global Trading L.L.C"/>;
   return <img src="/brand/logo-fa-gold.png" width={footer ? 190 : 152} height={footer ? 123 : 101} alt="جهان تجارت مجد"/>;
 }
 
