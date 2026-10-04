@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 
 const content = {
   fa: {
-    dir: 'rtl', locale: 'fa', switchLabel: 'En', title: 'جهان تجارت مجد | واردات قطعات خودرو از چین',
+    dir: 'rtl', locale: 'fa', switchLabel: 'En', title: 'جهان تجارت مجد | واردات قطعات خودرو',
     skip: 'رفتن به محتوای اصلی', brandLabel: 'جهان تجارت مجد، صفحه اصلی',
     nav: ['صفحه اصلی', 'محصولات', 'درباره ما', 'تماس با ما'], searchPlaceholder: 'جست‌وجوی محصولات...', searchLabel: 'جست‌وجوی محصولات',
     searchEmpty: 'نام یا دسته محصول را وارد کنید.', searchMiss: 'محصولی با این عبارت پیدا نشد.',
     slides: [
-      { title: 'قطعات موتور', caption: 'واردات و تأمین قطعات موتور خودرو از چین', keys: 'موتور پیشرانه فیلتر engine parts' },
+      { title: 'قطعات موتور', caption: 'واردات و تأمین قطعات موتور خودرو', keys: 'موتور پیشرانه فیلتر engine parts' },
       { title: 'سیستم ترمز', caption: 'راهکارهای مطمئن برای مجموعه‌های ترمز خودرو', keys: 'ترمز دیسک لنت brake system' },
       { title: 'تعلیق و فرمان', caption: 'قطعات سیستم تعلیق، جلوبندی و فرمان', keys: 'تعلیق فرمان جلوبندی suspension steering' },
       { title: 'قطعات الکتریکی', caption: 'تأمین مجموعه‌های برقی و الکترونیکی خودرو', keys: 'برق الکتریکی باتری چراغ electrical parts' },
@@ -29,7 +29,7 @@ const content = {
     nav: ['Home', 'Products', 'About us', 'Contact us'], searchPlaceholder: 'Search products...', searchLabel: 'Search products',
     searchEmpty: 'Enter a product name or category.', searchMiss: 'No matching product was found.',
     slides: [
-      { title: 'Engine Parts', caption: 'Automotive engine components imported from China', keys: 'engine motor filters قطعات موتور' },
+      { title: 'Engine Parts', caption: 'Import and supply of automotive engine components', keys: 'engine motor filters قطعات موتور' },
       { title: 'Braking System', caption: 'Reliable solutions for automotive braking systems', keys: 'brake disc pad ترمز لنت' },
       { title: 'Suspension & Steering', caption: 'Suspension, chassis and steering components', keys: 'suspension steering تعلیق فرمان جلوبندی' },
       { title: 'Electrical Parts', caption: 'Automotive electrical and electronic components', keys: 'electrical battery light قطعات برقی الکتریکی' },
@@ -48,7 +48,7 @@ const content = {
 function SearchIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4 4"/></svg>; }
 function GlobeIcon() { return <svg className="globe-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17M3.5 15h17M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21M12 3C9.8 5.4 8.7 8.4 8.7 12s1.1 6.6 3.3 9"/></svg>; }
 function BrandLogo({ isEnglish, footer = false }) {
-  if (isEnglish) return <img className="english-logo" src="/brand/logo-en-final-beige.svg" width={158} height={82} alt="Majd Global Trading L.L.C"/>;
+  if (isEnglish) return <img className="english-logo" src="/brand/logo-en-beige.svg" width={158} height={82} alt="Majd Global Trading"/>;
   return <img src="/brand/logo-fa-gold.png" width={footer ? 190 : 152} height={footer ? 123 : 101} alt="جهان تجارت مجد"/>;
 }
 
@@ -115,7 +115,7 @@ export default function Home() {
       <h1 className="sr-only">{t.footerCompany}</h1>
       {/* Previous opening hero retained for possible restoration:
           «جهان تجارت مجد — از مرزها فراتر، به همکاری نزدیک‌تر.
-          واردات قطعات خودرو از چین؛ پیوندی میان تأمین و تجارت.» */}
+          واردات قطعات خودرو؛ پیوندی میان تأمین و تجارت.» */}
       <section id="products" className="slider" aria-roledescription="carousel" aria-label={t.nav[1]} tabIndex={0} onTouchStart={(event) => { touchStart.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }} onTouchEnd={swipeEnd} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); slideStep(event.key === "ArrowRight" ? 1 : -1); } }}>
         <div className="slides-track">
           {t.slides.map((slide, index) => <article className={`slide${index === activeSlide ? ' is-active' : ''}`} key={slide.title} aria-hidden={activeSlide !== index}><img src="/images/auto-parts-showcase.jpg" alt=""/><div className="slide-shade"/><div className="shell slide-content" dir={t.dir}><span>{String(index + 1).padStart(2, '0')}</span><h2>{slide.title}</h2><p>{slide.caption}</p></div></article>)}
