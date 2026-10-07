@@ -60,9 +60,9 @@ export default function Home() {
       <section id="about" className="about section-pad"><div className="shell about-grid"><div className="section-title"><span className="section-kicker"><span>01</span> {t.aboutLabel}</span><h2 className="multiline">{t.aboutTitle}</h2></div><div className="about-copy"><p className="lead">{t.belief}</p><div className="director-message"><span className="director-label">{t.directorLabel}</span><blockquote>{t.directorMessage}</blockquote></div></div></div></section>
       <section id="contact" className="contact section-pad">
         <div className="shell">
-          <div className="contact-heading"><div><span className="section-kicker"><span>02</span> {t.contactLabel}</span><h2>{t.contactTitle}</h2><p>{t.contactText}</p></div></div>
+          <div className="contact-heading"><div><span className="section-kicker"><span>02</span> {t.contactLabel}</span><p>{t.contactText}</p></div></div>
           <div className="contact-groups">{[[contacts[0], contacts[1], contacts[3]], [contacts[2], contacts[4]]].map((group, index) => <div className="contact-group" key={index}>
-            <h3><span className="contact-dot"/>{index === 0 ? t.companyGroup : t.managementGroup}</h3>
+            <h2><span className="contact-dot"/>{index === 0 ? t.companyGroup : t.managementGroup}</h2>
             {group.map((item) => <div className={`contact-row${item.wide ? ' address-row' : ''}`} key={item.label}>
               <span className="contact-card-label">{item.label}</span>
               <div className="contact-details">{item.href ? <a className="contact-value" href={item.href} dir="ltr">{item.value}</a> : <p className="contact-value">{item.value}</p>}
