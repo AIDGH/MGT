@@ -1,0 +1,7 @@
+[Unit]
+Description=Daily MGT content backup
+[Timer]
+OnCalendar=*-*-* 02:30:00 Asia/Tehran
+Persistent=true
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,21 @@
+[Unit]
+Description=MGT NestJS API
+After=network.target postgresql.service
+Requires=postgresql.service
+[Service]
+User=mgt
+Group=mgt
+WorkingDirectory=/opt/mgt/current/api
+EnvironmentFile=/etc/mgt/api.env
+ExecStart=/usr/local/bin/node dist/main.js
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/mgt/uploads
+UMask=0022
+[Install]
+WantedBy=multi-user.target

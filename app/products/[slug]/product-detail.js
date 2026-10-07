@@ -1,0 +1,8 @@
+'use client';
+import { useState } from 'react';
+import { useSite } from '../../../components/site-provider';
+import { CatalogShell } from '../../../components/site-shell';
+export default function ProductDetail({product:p}){
+ const {isEnglish,site}=useSite();const [active,setActive]=useState(0);const name=p[isEnglish?'nameEn':'nameFa'];
+ return <CatalogShell><div className="shell catalog-content"><a className="back-catalog" href="/products">{isEnglish?'← All products':'همه محصولات →'}</a><div className="product-detail"><div><div className="detail-image">{p.images[active]&&<img src={p.images[active]} alt={name}/>}</div>{p.images.length>1&&<div className="product-thumbnails">{p.images.map((src,i)=><button key={src} aria-label={`${isEnglish?'Image':'تصویر'} ${i+1}`} aria-pressed={active===i} className={active===i?'selected':''} onClick={()=>setActive(i)}><img src={src} alt=""/></button>)}</div>}</div><div className="detail-copy"><span className="section-kicker">{p.category?.[isEnglish?'nameEn':'nameFa']||'MGT'}</span><h1>{name}</h1>{p.sku&&<p>{isEnglish?'Part number':'شماره قطعه'}: <bdi>{p.sku}</bdi></p>}<p className="multiline">{p[isEnglish?'descriptionEn':'descriptionFa']}</p><a className="gold-button" href={`mailto:${site.companyEmail}?subject=${encodeURIComponent(`Product enquiry: ${p.nameEn} ${p.sku}`)}`}>{isEnglish?'Enquire about this product':'استعلام این محصول'}</a><a className="detail-phone" href={`tel:${site.officePhone}`}>{isEnglish?'Call our team':'تماس با شرکت'} <bdi>{site.officePhone}</bdi></a></div></div>{p[isEnglish?'specsEn':'specsFa']&&<section className="product-specs"><h2>{isEnglish?'Specifications':'مشخصات محصول'}</h2><p className="multiline">{p[isEnglish?'specsEn':'specsFa']}</p></section>}</div></CatalogShell>;
+}

@@ -1,0 +1,7 @@
+[Unit]
+Description=Back up MGT content database and media
+After=postgresql.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/mgt-backup
+UMask=0077

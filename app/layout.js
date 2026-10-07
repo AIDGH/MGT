@@ -1,4 +1,5 @@
 import './globals.css';
+import { SiteProvider } from '../components/site-provider';
 
 export const metadata = {
   title: 'جهان تجارت مجد | واردات قطعات خودرو',
@@ -6,5 +7,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <html lang="fa" dir="rtl"><body>{children}</body></html>;
+  return <html lang="fa" dir="rtl"><body><SiteProvider>{children}</SiteProvider></body></html>;
 }

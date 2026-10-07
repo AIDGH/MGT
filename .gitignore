@@ -3,3 +3,11 @@ node_modules/
 out/
 .sites-runtime/
 .DS_Store
+
+.env
+.env.*
+!.env.example
+api/dist/
+api/uploads/
+.secrets/
+*.tsbuildinfo

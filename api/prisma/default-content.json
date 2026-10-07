@@ -1,0 +1,70 @@
+{
+  "content": {
+    "fa": {
+      "title": "جهان تجارت مجد | واردات قطعات خودرو",
+      "belief": "در جهان تجارت مجد، ما فراتر از تجارت، به ساختن روابطی پایدار و ارزش‌آفرین باور داریم.",
+      "directorLabel": "پیام مدیرعامل",
+      "directorMessage": "به عنوان مدیر عامل، هر روز با اشتیاق و تعهد در کنار تیم‌مان تلاش می‌کنیم تا نه‌تنها نیازهای تجاری شما را برآورده کنیم، بلکه با هم مسیر موفقیت و پیشرفت را بسازیم.",
+      "contactTitle": "ارتباط با شرکت",
+      "contactText": "برای گفتگو درباره همکاری یا دریافت اطلاعات بیشتر، از راه‌های زیر با ما در تماس باشید.",
+      "address": "تهران، بلوار دریا، ابتدای پاکنژاد، کوچه عیسی‌پور، پلاک ۲۸، واحد ۱",
+      "aboutTitle": "تجارت،\nبا نگاهی فراتر."
+    },
+    "en": {
+      "title": "Majd Global Trading | Automotive Parts Importer",
+      "belief": "At Jahan Tejarat Majd, we believe in building enduring and value-creating relationships, beyond just trade.",
+      "directorLabel": "Managing Director's message",
+      "directorMessage": "As the Managing Director, every day, with passion and commitment, we strive alongside our team not only to meet your business needs but to jointly shape a path of success and progress.",
+      "contactTitle": "Contact the company",
+      "contactText": "To discuss a partnership or request more information, please contact us using the details below.",
+      "address": "Tehran, Iran",
+      "aboutTitle": "Trade,\nwith a broader vision."
+    },
+    "officePhone": "+982188563648",
+    "managementPhone": "+989121080499",
+    "companyEmail": "info@majdglobaltrading.com",
+    "directorEmail": "ceo@majdglobaltrading.com"
+  },
+  "slides": [
+    {
+      "titleFa": "قطعات موتور",
+      "captionFa": "واردات و تأمین قطعات موتور خودرو",
+      "titleEn": "Engine Parts",
+      "captionEn": "Import and supply of automotive engine components",
+      "image": "/images/auto-parts-showcase.jpg",
+      "href": "/products",
+      "position": 0,
+      "active": true
+    },
+    {
+      "titleFa": "سیستم ترمز",
+      "captionFa": "راهکارهای مطمئن برای مجموعه‌های ترمز خودرو",
+      "titleEn": "Braking System",
+      "captionEn": "Reliable solutions for automotive braking systems",
+      "image": "/images/auto-parts-showcase.jpg",
+      "href": "/products",
+      "position": 1,
+      "active": true
+    },
+    {
+      "titleFa": "تعلیق و فرمان",
+      "captionFa": "قطعات سیستم تعلیق، جلوبندی و فرمان",
+      "titleEn": "Suspension & Steering",
+      "captionEn": "Suspension, chassis and steering components",
+      "image": "/images/auto-parts-showcase.jpg",
+      "href": "/products",
+      "position": 2,
+      "active": true
+    },
+    {
+      "titleFa": "قطعات الکتریکی",
+      "captionFa": "تأمین مجموعه‌های برقی و الکترونیکی خودرو",
+      "titleEn": "Electrical Parts",
+      "captionEn": "Automotive electrical and electronic components",
+      "image": "/images/auto-parts-showcase.jpg",
+      "href": "/products",
+      "position": 3,
+      "active": true
+    }
+  ]
+}
