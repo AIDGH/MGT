@@ -8,7 +8,7 @@ if os.geteuid() != 0:
     raise SystemExit('Run as root')
 if subprocess.run(['id', '-u', 'mgt'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode:
     run(['useradd', '--system', '--home-dir', '/var/lib/mgt', '--create-home', '--shell', '/usr/sbin/nologin', 'mgt'])
-for path, mode in [('/etc/mgt',0o700),('/var/lib/mgt/uploads',0o755),('/var/backups/mgt',0o700),('/opt/mgt/releases',0o755)]:
+for path, mode in [('/etc/mgt',0o700),('/var/lib/mgt',0o751),('/var/lib/mgt/uploads',0o755),('/var/backups/mgt',0o700),('/opt/mgt/releases',0o755)]:
     pathlib.Path(path).mkdir(parents=True,exist_ok=True)
     os.chmod(path,mode)
 run(['chown','-R','mgt:mgt','/var/lib/mgt'])
