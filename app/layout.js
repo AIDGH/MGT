@@ -3,7 +3,7 @@ import { companyPreview, shareOpenGraph, shareTwitter } from '../lib/share-metad
 import { SiteProvider } from '../components/site-provider';
 
 export const metadata = {
-  title: 'جهان تجارت مجد | واردات قطعات خودرو',
+  title: companyPreview,
   description: companyPreview,
   openGraph: shareOpenGraph,
   twitter: shareTwitter,
