@@ -1,9 +1,12 @@
 import './globals.css';
+import { companyPreview, shareOpenGraph, shareTwitter } from '../lib/share-metadata';
 import { SiteProvider } from '../components/site-provider';
 
 export const metadata = {
   title: 'جهان تجارت مجد | واردات قطعات خودرو',
-  description: 'در جهان تجارت مجد، ما فراتر از تجارت، به ساختن روابطی پایدار و ارزش‌آفرین باور داریم.',
+  description: companyPreview,
+  openGraph: shareOpenGraph,
+  twitter: shareTwitter,
 };
 
 export default function RootLayout({ children }) {
