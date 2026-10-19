@@ -1,0 +1,9 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "steps": [
+    {"step": "activatePlugin", "pluginPath": "mgt-content/mgt-content.php"},
+    {"step": "activateTheme", "themeFolderName": "mgt-classic"},
+    {"step": "runPHP", "code": "<?php require '/wordpress/wp-load.php'; update_option('blogname', 'شرکت بازرگانی جهان تجارت مجد'); update_option('blogdescription', ''); update_option('blog_public', 0); update_option('permalink_structure', '/%postname%/'); update_option('WPLANG', 'fa_IR'); update_option('timezone_string', 'Asia/Tehran'); define('MGT_IMPORT_DIR', '/mgt-source'); require '/mgt-tools/import-content.php';"}
+  ]
+}

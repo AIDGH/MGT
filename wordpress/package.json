@@ -1,0 +1,13 @@
+{
+  "name": "mgt-wordpress-preview",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "preview": "node tools/preview.mjs",
+    "package": "python3 tools/package.py"
+  },
+  "devDependencies": {
+    "@wp-playground/cli": "3.1.59"
+  }
+}

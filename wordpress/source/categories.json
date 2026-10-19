@@ -1,0 +1,30 @@
+[
+  {
+    "id": "0c7db30b-7bd9-4685-9238-326130a04363",
+    "slug": "suspension-steering",
+    "nameFa": "تعلیق و فرمان",
+    "nameEn": "Suspension & Steering",
+    "version": 1
+  },
+  {
+    "id": "e2267441-78ea-4ad9-8f6f-4fcdcae91984",
+    "slug": "braking-system",
+    "nameFa": "سیستم ترمز",
+    "nameEn": "Braking System",
+    "version": 1
+  },
+  {
+    "id": "74ac4bdf-897a-41c9-834b-e85ce1f03294",
+    "slug": "electrical-parts",
+    "nameFa": "قطعات الکتریکی",
+    "nameEn": "Electrical Parts",
+    "version": 1
+  },
+  {
+    "id": "616baf2e-2964-4ca3-b3fb-09d8f9e1e4b8",
+    "slug": "engine-parts",
+    "nameFa": "قطعات موتور",
+    "nameEn": "Engine Parts",
+    "version": 1
+  }
+]
